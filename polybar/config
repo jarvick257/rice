@@ -1,0 +1,282 @@
+[colors]
+bg          = ${xrdb:color0}
+fg          = ${xrdb:color7}
+inactive-bg = #2f343f
+inactive-fg = #676E7D
+urgent      = #E53935
+arc-blue    = ${xrdb:color2}
+
+
+[template/bar]
+enable-ipc = true
+width = 100%
+height = 27
+
+background = ${colors.bg}
+foreground = ${colors.fg}
+
+border-bottom-size = 0
+border-bottom-color = ${colors.inactive-bg}
+
+overline-size = 0
+overline-color = ${self.background}
+underline-size = 1
+underline-color = ${self.background}
+
+padding-left = 0
+padding-right = 0
+module-margin-left = 3
+module-margin-right = 3
+
+font-0 = "DejaVu Sans:size=8;2"
+font-1 = "FontAwesome:size=10;0"
+wm-restack = i3
+tray-position = 
+
+[bar/right]
+inherit = template/bar
+monitor = VGA-1
+modules-left = volume mail eth
+modules-center = i3
+modules-right = mxbattery clock
+
+[bar/left]
+inherit = template/bar
+monitor = HDMI-1
+modules-left = wired-network
+modules-center = cpu i3 memory
+modules-right = clock
+
+[bar/laptop]
+inherit = template/bar
+monitor = eDP-1
+modules-left = wired-network wireless-network volume
+modules-center = cpu i3 memory
+modules-right = mail xbacklight eth bat0 bat1 clock
+
+[module/mail]
+type = custom/script
+interval = 10
+format = <label>
+format-prefix = 
+format-prefix-foreground = ${colors.inactive-fg}
+exec = ~/.scripts/printmail.sh
+
+[module/mxbattery]
+type = custom/script
+interval = 60
+format = <label>
+format-foreground = ${colors.fg}
+exec = ~/.scripts/mxbattery.sh
+
+[module/eth]
+type = custom/script
+interval = 60
+format = €<label>
+format-foreground = ${colors.inactive-fg}
+exec = ~/.scripts/ethBalance.sh
+
+[module/xbacklight]
+type = internal/xbacklight
+output = eDP-1
+format = <ramp> <bar>
+
+ramp-0 = 
+ramp-0-foreground = ${colors.inactive-bg}
+ramp-1 = 
+ramp-1-foreground = ${colors.inactive-fg}
+ramp-2 = 
+ramp-2-foreground = ${colors.fg}
+
+bar-width = 12
+bar-indicator = |
+bar-indicator-font = 6
+bar-indicator-foreground = ${colors.fg}
+bar-fill = ─
+bar-fill-font = 6
+bar-fill-foreground = ${colors.arc-blue}
+bar-empty = ─
+bar-empty-font = 6
+bar-empty-foreground = ${colors.inactive-bg}
+
+[module/volume]
+type = internal/volume
+master-mixer=Master
+format-volume = <ramp-volume> <bar-volume>
+format-muted = <label-muted>
+
+label-muted-foreground = ${colors.inactive-fg}
+label-muted =  muted
+
+ramp-volume-0 = "  "
+ramp-volume-0-foreground = ${colors.inactive-bg}
+ramp-volume-1 = " "
+ramp-volume-1-foreground = ${colors.inactive-fg}
+ramp-volume-2 = 
+ramp-volume-2-foreground = ${colors.fg}
+
+bar-volume-width = 12
+bar-volume-indicator = |
+bar-volume-indicator-font = 6
+bar-volume-indicator-foreground = ${colors.fg}
+bar-volume-fill = ─
+bar-volume-fill-font = 6
+bar-volume-fill-foreground = ${colors.arc-blue}
+bar-volume-empty = ─
+bar-volume-empty-font = 6
+bar-volume-empty-foreground = ${colors.inactive-bg}
+
+[module/i3]
+type = internal/i3
+format = <label-state> <label-mode>
+pin-workspaces = false
+
+ws-icon-0 = 1;
+ws-icon-1 = 2;
+ws-icon-2 = 3;
+ws-icon-3 = 4;4
+ws-icon-4 = 5;5
+ws-icon-5 = 6;6
+ws-icon-6 = 7;7
+ws-icon-7 = 8;8
+ws-icon-8 = 9;
+ws-icon-9 = 10;
+ws-icon-default = 
+
+label-dimmed-underline = ${root.background}
+
+label-mode = %mode%
+label-mode-foreground = ${colors.arc-blue}
+label-mode-padding = 2
+
+label-focused = %icon%
+label-focused-foreground = ${colors.fg}
+label-focused-background = ${colors.inactive-bg}
+label-focused-underline = ${colors.arc-blue}
+label-focused-font = 4
+label-focused-padding = 4
+
+label-unfocused = %icon%
+label-unfocused-foreground = ${colors.inactive-fg}
+label-unfocused-underline = ${colors.bg}
+label-unfocused-font = 4
+label-unfocused-padding = 4
+
+label-urgent = %icon%
+label-urgent-foreground = ${colors.urgent}
+label-urgent-background = ${colors.bg}
+label-urgent-underline = ${colors.urgent}
+label-urgent-font = 4
+label-urgent-padding = 4
+
+label-visible = %icon%
+label-visible-foreground = ${colors.fg}
+label-visible-background = ${colors.inactive-bg}
+label-visible-font = 4
+label-visible-padding = 4
+
+
+[module/cpu]
+type = internal/cpu
+interval = 1.5
+format = <ramp-coreload>
+label = CPU %percentage%%
+ramp-coreload-foreground = ${colors.inactive-fg}
+ramp-coreload-0 = ▁
+ramp-coreload-1 = ▂
+ramp-coreload-2 = ▃
+ramp-coreload-3 = ▄
+ramp-coreload-4 = ▅
+ramp-coreload-5 = ▆
+ramp-coreload-6 = ▇
+ramp-coreload-7 = █
+
+
+[module/memory]
+type = internal/memory
+interval = 3
+format = <bar-used>
+label = %percentage_used% %
+label-font = 10
+label-foreground = ${colors.inactive-fg}
+
+bar-used-indicator =
+bar-used-width = 5
+bar-used-fill-foreground = ${colors.inactive-fg}
+bar-used-fill = "█ "
+bar-used-empty = "█ "
+bar-used-empty-foreground = ${colors.inactive-bg}
+
+
+[template/network]
+type = internal/network
+interval = 2.0
+ping-interval = 10
+label-disconnected = "   No Connection"
+label-disconnected-foreground = ${colors.inactive-fg}
+
+
+[module/wireless-network]
+inherits = template/network
+interface = wlp4s0
+format-connected = <label-connected>
+label-connected = "   %essid%  (%signal%%)"
+label-connected-foreground = ${colors.inactive-fg}
+
+
+[module/wired-network]
+type = internal/network
+D-->interface = enp3s0
+L-->interface = enp0s31f6
+format-connected = <label-connected>
+label-connected = "    %local_ip%"
+label-connected-foreground = ${colors.inactive-fg}
+
+
+[module/clock]
+type = internal/date
+interval = 1
+format-padding = 0
+format-background = ${colors.bg}
+format-foreground = ${colors.fg}
+date = %%{F#bb}%a %e %b%%{F-}
+date-alt = %%{F#bb}%D%{F-}
+time = %H:%M
+time-alt = %H:%M:%S
+label = "%date% %time%  "
+format = <label>
+
+
+[template/battery]
+type = internal/battery
+full-at = 99
+
+ramp-capacity-foreground = ${colors.inactive-fg}
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+
+label-discharging-foreground = ${colors.inactive-fg}
+label-discharging = %percentage%%
+
+label-charging-foreground = ${colors.arc-blue}
+label-charging = 
+
+format-discharging = <label-discharging> <ramp-capacity>
+format-charging = <label-charging> <ramp-capacity>
+format-full = <ramp-capacity>
+
+
+[module/bat0]
+inherit = template/battery
+battery = BAT0
+
+[module/bat1]
+inherit = template/battery
+battery = BAT1
+
+; vim:ft=dosini
+
+
