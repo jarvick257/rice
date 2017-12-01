@@ -1,0 +1,77 @@
+no <down> <Nop>
+no <left> <Nop>
+no <right> <Nop>
+no <up> <Nop>
+
+ino <down> <Nop>
+ino <left> <Nop>
+ino <right> <Nop>
+ino <up> <Nop>
+
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
+set t_Co=256
+set laststatus=2
+set relativenumber
+set number
+set showtabline=2
+set scrolloff=5
+set showcmd
+set ttimeoutlen=10
+set incsearch " Show search hits while typing
+" Remember last cursor position:
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+endif
+
+syntax on
+
+" PLUG:
+call plug#begin('~/.vim/plugged')
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'vim-latex/vim-latex'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-commentary'
+Plug 'junegunn/goyo.vim'
+Plug 'vim-scripts/FuzzyFinder'
+Plug 'eparreno/vim-l9'
+Plug 'dylanaraps/wal.vim'
+call plug#end()
+
+colorscheme wal
+
+" LATEX:
+" REQUIRED: This makes vim invoke Latex-Suite when you open a tex file.
+filetype plugin on
+
+" IMPORTANT: grep will sometimes skip displaying the file name if you
+" search in a singe file. This will confuse Latex-Suite. Set your grep
+" program to always generate a file-name.
+set grepprg=grep\ -nH\ $*
+
+" OPTIONAL: This enables automatic indentation as you type.
+filetype indent on
+
+" OPTIONAL: Starting with Vim 7, the filetype of empty .tex files defaults to
+" 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
+" The following changes the default filetype back to 'tex':
+let g:tex_flavor='latex'
+let g:Tex_DefaultTargetFormat='pdf'
+let g:Tex_CompileRule_pdf='make'
+"let g:Tex_CompileRule_pdf='pdflatex -interaction=nonstopmode $*'
+let g:Tex_ViewRule_pdf='atril'
+let g:Tex_MultipleCompileFormats='dvi,pdf'
+
+" GOYO:
+let g:goyo_width=160
+let g:goyo_margin_top=4
+let g:goyo_margin_bottom=4
+map <F10> :Goyo<CR>
+inoremap <F10> <esc>:Goyo<CR>a
+
+" FUZZY FINDER:
+map <C-g> :FufFile<CR>
+
+" Copy mode
+map <F9> :set invnumber invrelativenumber<CR>
