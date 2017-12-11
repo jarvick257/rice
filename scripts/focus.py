@@ -2,7 +2,6 @@
 
 import i3
 import json
-import os
 from subprocess import check_output
 
 def current_workspace():
