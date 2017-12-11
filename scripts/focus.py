@@ -1,8 +1,6 @@
 #!/bin/python
 
 import i3
-import json
-from subprocess import check_output
 
 def current_workspace():
     workspaces = i3.get_workspaces()
@@ -19,8 +17,7 @@ def find_tmp():
 def create_tmp(current_id):
     i3.focus(con_id=current_id)
     i3.split('vertical')
-    tmp_id = check_output(['i3-msg','open']).decode('UTF-8')
-    tmp_id = json.loads(tmp_id)[0]['id']
+    i3.open()
 
 def destroy_tmp(tmp_id):
     i3.kill(con_id=tmp_id)
