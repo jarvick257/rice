@@ -44,8 +44,7 @@ def make_unfloat(current_id):
     i3.floating('disable')
 
 def main():
-    tree = check_output(['i3-msg', '-t', 'get_tree']).strip()
-    tree = tree.decode('UTF-8')
+    tree = check_output(['i3-msg', '-t', 'get_tree']).decode('UTF-8').strip()
     root = json.loads(tree)
     current = findWindow(root)
     current_id = current['id']
