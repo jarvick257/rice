@@ -2,12 +2,6 @@
 
 import i3
 
-def current_workspace():
-    workspaces = i3.get_workspaces()
-    for w in workspaces:
-        if w['focused'] == True:
-            return i3.filter(type='workspace',name=w['name'])[0]['num']
-
 def find_tmp():
     tmps = i3.filter(nodes=[], window=None, name=None)
     if len(tmps) != 1:
